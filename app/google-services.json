@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "324795833614",
+    "project_id": "pasar-laut",
+    "storage_bucket": "pasar-laut.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324795833614:android:b811c3ce83018fa5cf8b5f",
+        "android_client_info": {
+          "package_name": "com.audacoding.pasarlaut"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324795833614-91huel22obtg3acbu8lnkt58gb0c6vas.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG6tzZ_6d4z-nWxQ8qXZFFl5B6fjkbpiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324795833614-91huel22obtg3acbu8lnkt58gb0c6vas.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

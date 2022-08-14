@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/nelayan_chat"
+        android:title="@string/chat"
+        android:icon="@drawable/ic_outline_chat_24"/>
+
+    <item android:id="@+id/nelayan_placeholder"
+        android:title=""/>
+
+    <item android:id="@+id/nelayan_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_baseline_person_outline_24"/>
+</menu>

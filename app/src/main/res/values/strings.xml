@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Pasar Laut</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="lupa_password"><u>Lupa password?</u></string>
+    <string name="buat_akun">Buat Akun</string>
+    <string name="buat_akun_u"><u>Buat Akun</u></string>
+    <string name="daftar">Daftar</string>
+    <string name="email">Email</string>
+    <string name="daftar_sebagai">Daftar Sebagai</string>
+    <string name="nelayan">Nelayan</string>
+    <string name="pembeli">Pembeli</string>
+    <string name="sudah_punya_akun_klik_disini">Sudah punya akun? Klik disini</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="chat">Chat</string>
+    <string name="profile">Profile</string>
+    <string name="data_tangkapan_nelayan">Data Tangkapan Nelayan</string>
+    <string name="update">Update</string>
+    <string name="nama">Nama</string>
+    <string name="stok">Stok</string>
+    <string name="tambahkan">Tambahkan</string>
+    <string name="masukan_foto_ikan">Masukan Foto Ikan</string>
+    <string name="choose_file">Choose File</string>
+    <string name="field_empty">Field harus diisi!</string>
+    <string name="register_success">Register berhasil, silahkan login!</string>
+    <string name="invalid_email_password">Email/Password salah!</string>
+    <string name="stock">Stock: %s</string>
+    <string name="alamat">Alamat</string>
+    <string name="nomor_telepon">Nomor Telepon</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="logout"><u>Logout</u></string>
+    <string name="masukan_foto">Masukan Foto</string>
+    <string name="simpan">Simpan</string>
+    <string name="deskripsi_produk">Deskripsi Produk</string>
+    <string name="deskripsi">Deskripsi</string>
+</resources>
