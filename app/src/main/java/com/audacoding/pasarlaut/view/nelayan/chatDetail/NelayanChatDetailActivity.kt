@@ -27,7 +27,7 @@ class NelayanChatDetailActivity : AppCompatActivity() {
         binding = ActivityNelayanChatDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.getChat(product.id)
+        viewModel.getChat(product.id, name)
         initListeners()
 
         adapter = NelayanChatDetailAdapter(viewModel.getUid())

@@ -12,7 +12,7 @@ class NelayanChatDetailViewModel: BaseViewModel() {
 
     fun getUid(): String = _auth.uid!!
 
-    fun getChat(productId: Long) {
+    fun getChat(productId: Long, buyerName: String) {
         _onLoading.postValue(true)
 
         _firestore.collection("chats")
@@ -27,7 +27,8 @@ class NelayanChatDetailViewModel: BaseViewModel() {
                     val docs = value!!.documents
                     val filteredChat = docs.filter { doc ->
                         val docObj = doc.toObject(Chat::class.java)!!
-                        docObj.productDetail.id == productId
+                        docObj.productDetail.id == productId &&
+                                docObj.buyerName == buyerName
                     }
 
                     val chats = arrayListOf<Chat>()
