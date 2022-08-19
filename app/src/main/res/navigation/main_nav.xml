@@ -19,6 +19,9 @@
             app:launchSingleTop="false"
             app:popUpTo="@id/nelayanHomeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_userHomeFragment"
+            app:destination="@id/userHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -48,7 +51,13 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.audacoding.pasarlaut.DetailFragment"
+        android:name="com.audacoding.pasarlaut.view.user.detail.DetailActivity"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/activity_detail" />
+    <fragment
+        android:id="@+id/userHomeFragment"
+        android:name="com.audacoding.pasarlaut.view.user.home.UserHomeFragment"
+        android:label="fragment_user_home"
+        tools:layout="@layout/fragment_user_home" >
+    </fragment>
 </navigation>

@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 
 class AddBottomSheet : BottomSheetDialogFragment() {
     private var _binding: FragmentAddBottomSheetBinding? = null
@@ -31,7 +32,6 @@ class AddBottomSheet : BottomSheetDialogFragment() {
             val data = result.data
 
             if (resultCode == Activity.RESULT_OK) {
-                //Image Uri will not be null for RESULT_OK
                 val fileUri = data?.data!!
 
                 this.fileUri = fileUri
@@ -54,13 +54,17 @@ class AddBottomSheet : BottomSheetDialogFragment() {
 
         binding.apply {
             btnNelayanAdd.setOnClickListener {
+                showToast(requireContext(), "Silahkan tunggu")
+
                 if(!etNelayanAddNama.text.isNullOrEmpty() &&
                     !etNelayanAddStok.text.isNullOrEmpty() &&
                     !etNelayanAddDesc.text.isNullOrEmpty() &&
+                    !etNelayanAddPrice.text.isNullOrEmpty() &&
+                    etNelayanAddPrice.text.toString().toInt() > 0 &&
                     fileUri != null) {
                     addData()
                 } else {
-                    dismiss()
+                    showToast(requireContext(), "Field masih ada yang kosong!")
                 }
             }
             btnNelayanAddPhoto.setOnClickListener {
@@ -88,6 +92,7 @@ class AddBottomSheet : BottomSheetDialogFragment() {
                             etNelayanAddNama.text.toString(),
                             etNelayanAddStok.text.toString(),
                             etNelayanAddDesc.text.toString(),
+                            etNelayanAddPrice.text.toString(),
                             url)
                     }.addOnFailureListener { e ->
                         showToast(requireContext(), e.message.toString())
@@ -103,6 +108,7 @@ class AddBottomSheet : BottomSheetDialogFragment() {
         productName: String,
         stock: String,
         desc: String,
+        price: String,
         imgUrl: Uri) {
         val firestore = FirebaseFirestore.getInstance()
         firestore.collection("products").add(
@@ -112,9 +118,12 @@ class AddBottomSheet : BottomSheetDialogFragment() {
                 "productName" to productName,
                 "stock" to stock,
                 "desc" to desc,
-                "imgUrl" to imgUrl
+                "price" to price,
+                "imgUrl" to imgUrl,
+                "createdAt" to Calendar.getInstance().timeInMillis
             )
         ).addOnSuccessListener {
+            showToast(requireContext(), "Data telah ditambahkan!")
             dismiss()
         }
             .addOnFailureListener {

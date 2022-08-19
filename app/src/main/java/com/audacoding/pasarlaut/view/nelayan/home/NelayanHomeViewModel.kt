@@ -18,6 +18,7 @@ class NelayanHomeViewModel: BaseViewModel() {
 
         _firestore.collection("products")
             .whereEqualTo("userId", uid)
+            .orderBy("createdAt")
             .addSnapshotListener { value, error ->
                 if(error != null) {
                     _onLoading.postValue(false)
@@ -27,12 +28,14 @@ class NelayanHomeViewModel: BaseViewModel() {
 
                     value.documents.forEach {
                         val product = NelayanProduct(
-                            it.id,
+                            it.getLong("id")!!,
                             it.getString("userId")!!,
                             it.getString("productName")!!,
                             it.getString("stock")!!,
                             it.getString("desc")!!,
-                            it.getString("imgUrl")!!)
+                            it.getString("price") ?: "0",
+                            it.getString("imgUrl")!!,
+                            it.getLong("createdAt")!!)
 
                         products.add(product)
                     }

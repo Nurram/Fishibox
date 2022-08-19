@@ -17,9 +17,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 class EditBottomSheet(
-    private val productId: String,
+    private val productId: Long,
     private val productName: String,
     private val productStock: String,
+    private val productPrice: String,
     private val productDesc: String
 ) : BottomSheetDialogFragment() {
     private var _binding: FragmentEditBottomSheetBinding? = null
@@ -40,33 +41,44 @@ class EditBottomSheet(
             etNelayanAddNama.setText(productName)
             etNelayanAddStok.setText(productStock)
             etNelayanAddDesc.setText(productDesc)
+            etNelayanAddPrice.setText(productPrice)
 
             btnNelayanAdd.setOnClickListener {
+                showToast(requireContext(), "Silahkan tunggu")
+
                 if(!etNelayanAddNama.text.isNullOrEmpty() &&
                     !etNelayanAddStok.text.isNullOrEmpty() &&
-                    !etNelayanAddDesc.text.isNullOrEmpty()) {
+                    !etNelayanAddDesc.text.isNullOrEmpty() &&
+                    !etNelayanAddPrice.text.isNullOrEmpty() &&
+                    etNelayanAddPrice.text.toString().toInt() > 0) {
                     storeProductData(
                         etNelayanAddNama.text.toString(),
                         etNelayanAddStok.text.toString(),
-                        etNelayanAddDesc.text.toString()
+                        etNelayanAddDesc.text.toString(),
+                        etNelayanAddPrice.text.toString()
                     )
                 } else {
-                    dismiss()
+                    showToast(requireContext(), "Field masih ada yang kosong!")
                 }
             }
         }
     }
 
-    private fun storeProductData(productName: String, stock: String, desc: String) {
+    private fun storeProductData(productName: String, stock: String, desc: String, price: String) {
         val firestore = FirebaseFirestore.getInstance()
-        firestore.collection("products").document(productId).update(
-            mapOf(
-                "productName" to productName,
-                "stock" to stock,
-                "desc" to desc
-            )
-        ).addOnSuccessListener {
-            dismiss()
+        firestore.collection("products").whereEqualTo("id", productId)
+            .get().addOnSuccessListener {
+                firestore.collection("products").document(it.documents.first().id).update(
+                mapOf(
+                    "productName" to productName,
+                    "stock" to stock,
+                    "desc" to desc,
+                    "price" to price
+                )
+            ).addOnSuccessListener {
+                    showToast(requireContext(), "Data berhasil diubah!")
+                    dismiss()
+                }
         }
             .addOnFailureListener {
                 showToast(requireContext(), it.message.toString())

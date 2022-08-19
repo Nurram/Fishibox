@@ -1,5 +1,6 @@
 package com.audacoding.pasarlaut.view.register
 
+import androidx.lifecycle.MutableLiveData
 import com.audacoding.pasarlaut.view.BaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -7,6 +8,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 class RegisterViewModel: BaseViewModel() {
     private val auth = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
+
+    val registerSuccess = MutableLiveData<Map<String, Any>>()
 
     fun register(username: String, email: String, password: String, userType: String) {
         _onLoading.postValue(true)
@@ -48,7 +51,11 @@ class RegisterViewModel: BaseViewModel() {
             "userType" to userType,
             "uid" to uid
         )).addOnSuccessListener {
-            _onSuccess.postValue(true)
+            registerSuccess.postValue(mapOf(
+                "userType" to userType,
+                "success" to true,
+                "username" to username
+            ))
         }.addOnFailureListener {
             _onLoading.postValue(false)
             _onError.postValue(it.message)

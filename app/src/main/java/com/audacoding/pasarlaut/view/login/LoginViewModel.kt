@@ -5,13 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import com.audacoding.pasarlaut.view.BaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
 class LoginViewModel: BaseViewModel() {
     private val auth = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
 
-    private val _isLoggedIn = MutableLiveData(false)
-    val isLoggedIn get() = _isLoggedIn as LiveData<Boolean>
+    private val _loginSuccess = MutableLiveData<Map<String, Any>>()
+    val loginSuccess get() = _loginSuccess as LiveData<Map<String, Any>>
 
     fun checkUserLoggedIn() {
         _onSuccess.postValue(auth.currentUser != null)
@@ -31,7 +32,9 @@ class LoginViewModel: BaseViewModel() {
                     val userData = it.documents.first()
                     doLogin(
                         userData.get("email") as String,
-                        password
+                        password,
+                        userData.getString("userType")!!,
+                        username
                     )
                 }
             }.addOnFailureListener {
@@ -40,10 +43,14 @@ class LoginViewModel: BaseViewModel() {
             }
     }
 
-    private fun doLogin(email: String, password: String) {
+    private fun doLogin(email: String, password: String, userType: String, username: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                _onSuccess.postValue(true)
+                _loginSuccess.postValue(mapOf(
+                    "loginSuccess" to true,
+                    "userType" to userType,
+                    "username" to username
+                ))
             }.addOnFailureListener {
                 _onLoading.postValue(false)
                 _onError.postValue(it.message)

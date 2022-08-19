@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.nelayan.profile.ProfileFragment">
+    tools:context=".view.user.profile.UserProfileFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pasar Laut</string>
+    <string name="app_name">Fishibox</string>
     <string name="login">Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -24,7 +24,7 @@
     <string name="masukan_foto_ikan">Masukan Foto Ikan</string>
     <string name="choose_file">Choose File</string>
     <string name="field_empty">Field harus diisi!</string>
-    <string name="register_success">Register berhasil, silahkan login!</string>
+    <string name="register_success">Register berhasil!</string>
     <string name="invalid_email_password">Email/Password salah!</string>
     <string name="stock">Stock: %s</string>
     <string name="alamat">Alamat</string>
@@ -35,4 +35,31 @@
     <string name="simpan">Simpan</string>
     <string name="deskripsi_produk">Deskripsi Produk</string>
     <string name="deskripsi">Deskripsi</string>
+    <string name="favorit">Favorit</string>
+    <string name="keranjang">Keranjang</string>
+    <string name="search">Search</string>
+    <string name="harga">Harga</string>
+    <string name="riwayat">Riwayat</string>
+    <string name="check_out">Check out</string>
+    <string name="data_deleted">Data telah dihapus dari favorite</string>
+    <string name="home">Home</string>
+    <string name="_1">1</string>
+    <string name="alamat_pengiriman">Alamat Pengiriman</string>
+    <string name="pengiriman">Pengiriman (GOJEK)</string>
+    <string name="pembayaran">Metode Pembayaran (COD)</string>
+    <string name="beli">Beli</string>
+    <string name="metode_pengiriman">Metode Pengiriman</string>
+    <string name="gojek">Gojek</string>
+    <string name="grab">Grab</string>
+    <string name="metode_pembayaran">Metode Pembayaran</string>
+    <string name="cod">COD</string>
+    <string name="ovo">OVO</string>
+    <string name="gopay">GoPay</string>
+    <string name="total_pesanan">Total Pesanan</string>
+    <string name="tanggal_pesan">Tanggal Pesan</string>
+    <string name="total_bayar">Total Bayar</string>
+    <string name="masukan_email_kamu">Masukan email kamu</string>
+    <string name="kirim">Kirim</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="pesan">Ketik disini</string>
 </resources>

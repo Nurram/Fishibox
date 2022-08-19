@@ -1,17 +1,17 @@
 package com.audacoding.pasarlaut.view.login
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.audacoding.pasarlaut.R
+import com.audacoding.pasarlaut.*
 import com.audacoding.pasarlaut.databinding.FragmentLoginBinding
-import com.audacoding.pasarlaut.gone
-import com.audacoding.pasarlaut.showToast
-import com.audacoding.pasarlaut.visible
+import com.audacoding.pasarlaut.view.forgot.ForgotPasswordActivity
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
@@ -42,11 +42,16 @@ class LoginFragment : Fragment() {
                     login()
                 }
             }
+            tvLoginForgot.setOnClickListener {
+                val i = Intent(requireContext(), ForgotPasswordActivity::class.java)
+                startActivity(i)
+            }
             tvLoginRegister.setOnClickListener {
                 findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             }
         }
     }
+
 
     private fun login() {
         binding.apply {
@@ -58,11 +63,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun initListener() {
-        viewModel.isLoggedIn.observe(viewLifecycleOwner) {
-            if(it) {
-                moveToHome()
-            }
-        }
         viewModel.onLoading.observe(viewLifecycleOwner) {
             if(it) {
                 binding.loading.loadingScreen.visible()
@@ -73,14 +73,39 @@ class LoginFragment : Fragment() {
         viewModel.onError.observe(viewLifecycleOwner) {
             showToast(requireContext(), it)
         }
+        viewModel.loginSuccess.observe(viewLifecycleOwner) {
+            val loginSuccess: Boolean = it["loginSuccess"] as Boolean
+            val userType: String = it["userType"] as String
+            val username: String = it["username"] as String
+
+           storeStringToPref(requireContext(), "userType", userType)
+            storeStringToPref(requireContext(), "username", username)
+            if(loginSuccess) {
+                if(userType == "nelayan") {
+                    moveToHome()
+                } else {
+                    moveToUserHome()
+                }
+            }
+        }
         viewModel.onSuccess.observe(viewLifecycleOwner) {
             if(it) {
-                moveToHome()
+                val userType = getStringFromPref(requireContext(), "userType")!!
+
+                if(userType == "nelayan") {
+                    moveToHome()
+                } else {
+                    moveToUserHome()
+                }
             }
         }
     }
 
     private fun moveToHome() {
         findNavController().navigate(R.id.action_loginFragment_to_nelayanHomeFragment)
+    }
+
+    private fun moveToUserHome() {
+        findNavController().navigate(R.id.action_loginFragment_to_userHomeFragment)
     }
 }

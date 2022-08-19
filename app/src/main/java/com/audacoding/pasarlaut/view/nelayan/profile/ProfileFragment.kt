@@ -10,7 +10,10 @@ import androidx.navigation.fragment.findNavController
 import com.audacoding.pasarlaut.R
 import com.audacoding.pasarlaut.databinding.FragmentProfileBinding
 import com.audacoding.pasarlaut.gone
+import com.audacoding.pasarlaut.models.UserProfile
 import com.audacoding.pasarlaut.showToast
+import com.audacoding.pasarlaut.view.user.profile.UserProfileBottomSheet
+import com.audacoding.pasarlaut.view.user.profile.UserProfileViewModel
 import com.audacoding.pasarlaut.visible
 import com.bumptech.glide.Glide
 
@@ -18,7 +21,9 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<ProfileViewModel>()
+    private val viewModel by viewModels<UserProfileViewModel>()
+
+    private var userProfile: UserProfile? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,10 +39,12 @@ class ProfileFragment : Fragment() {
         viewModel.getProfile()
         initListeners()
 
-        val bottomSheet = ProfileBottomSheet()
         binding.apply {
             btnNelayanProfileEdit.setOnClickListener {
-                bottomSheet.show(childFragmentManager, ProfileBottomSheet.TAG)
+                if(userProfile != null) {
+                    val bottomSheet = UserProfileBottomSheet(userProfile!!)
+                    bottomSheet.show(childFragmentManager, UserProfileBottomSheet.TAG)
+                }
             }
             btnNelayanLogout.setOnClickListener { viewModel.signOut() }
         }
@@ -67,6 +74,14 @@ class ProfileFragment : Fragment() {
                 if(imgUrl != null) {
                     Glide.with(requireContext()).load(imgUrl).into(ivNelayanProfile)
                 }
+
+                userProfile = UserProfile(
+                    it.getString("name"),
+                    it.getString("username")!!,
+                    it.getString("address"),
+                    it.getString("phone"),
+                    it.getString("imgUrl")
+                )
             }
         }
         viewModel.onSuccess.observe(viewLifecycleOwner) {

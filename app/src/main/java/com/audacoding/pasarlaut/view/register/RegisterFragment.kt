@@ -8,11 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.audacoding.pasarlaut.R
+import com.audacoding.pasarlaut.*
 import com.audacoding.pasarlaut.databinding.FragmentRegisterBinding
-import com.audacoding.pasarlaut.gone
-import com.audacoding.pasarlaut.showToast
-import com.audacoding.pasarlaut.visible
 
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
@@ -77,8 +74,10 @@ class RegisterFragment : Fragment() {
         viewModel.onError.observe(viewLifecycleOwner) {
             showToast(requireContext(), it)
         }
-        viewModel.onSuccess.observe(viewLifecycleOwner) {
-            if(it) {
+        viewModel.registerSuccess.observe(viewLifecycleOwner) {
+            if(it["success"] != null) {
+                storeStringToPref(requireContext(), "userType", it["userType"] as String)
+                storeStringToPref(requireContext(), "username", it["username"] as String)
                 findNavController().popBackStack()
                 showToast(requireContext(), getString(R.string.register_success))
             }
