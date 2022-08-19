@@ -1,5 +1,6 @@
 package com.audacoding.pasarlaut.view.user.checkout
 
+import android.util.Log
 import com.audacoding.pasarlaut.models.NelayanProduct
 import com.audacoding.pasarlaut.view.BaseViewModel
 
@@ -20,6 +21,7 @@ class CheckoutViewModel: BaseViewModel() {
 
                 if(reducedQty > 0) {
                     reduceStock(doc.first().id, reducedQty)
+                    removeProductFromCart(doc.first().getLong("id")!!)
 
                     data["uid"] = _auth.uid!!
                     _firestore.collection("orders").add(data).addOnSuccessListener {
@@ -41,5 +43,22 @@ class CheckoutViewModel: BaseViewModel() {
             .update(mapOf(
                 "stock" to qty.toString()
             ))
+    }
+
+    private fun removeProductFromCart(id: Long) {
+        Log.d("TAG", "$id, ${_auth.uid}")
+        _firestore.collection("carts")
+            .whereEqualTo("uid", _auth.uid)
+            .whereEqualTo("productId", id)
+            .get()
+            .addOnSuccessListener {
+                if(!it.isEmpty) {
+                    _firestore.collection("carts")
+                        .document(it.first().id).delete()
+                }
+            }
+            .addOnFailureListener {
+                Log.d("TAG", it.message.toString())
+            }
     }
 }

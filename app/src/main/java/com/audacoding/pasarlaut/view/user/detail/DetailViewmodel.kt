@@ -88,6 +88,12 @@ class DetailViewModel: BaseViewModel() {
                     }
                 } else {
                     _onLoading.postValue(false)
+                    _productAdded.postValue(
+                        mapOf(
+                            "value" to true,
+                            "desc" to "Cart"
+                        )
+                    )
                 }
             }.addOnFailureListener {
                 _onError.postValue(it.message)

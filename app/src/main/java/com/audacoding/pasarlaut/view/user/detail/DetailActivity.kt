@@ -13,6 +13,8 @@ import com.audacoding.pasarlaut.view.user.checkout.CheckoutActivity
 import com.bumptech.glide.Glide
 
 class DetailActivity : AppCompatActivity() {
+    private lateinit var product: NelayanProduct
+
     private var _binding: ActivityDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -26,10 +28,10 @@ class DetailActivity : AppCompatActivity() {
         _binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val product = intent?.getParcelableExtra<NelayanProduct>("product")
+        product = intent?.getParcelableExtra("product")!!
 
         initListeners()
-        viewModel.checkIsFav(product!!.id)
+        viewModel.checkIsFav(product.id)
 
         binding.apply {
             tvName.text = product.productName
@@ -84,6 +86,13 @@ class DetailActivity : AppCompatActivity() {
             if(it != null) {
                 if(it["value"] == true) {
                     showToast(this, "Data Telah Disimpan di ${it["desc"]}")
+
+                    if(it["desc"] == "Cart") {
+                        val i = Intent(this, CheckoutActivity::class.java)
+                        i.putExtra("product", product)
+
+                        startActivity(i)
+                    }
                 }
             }
         }
